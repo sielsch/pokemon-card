@@ -1,0 +1,62 @@
+<div class="main-container">
+  <div class="row m-0 p-3 pt-4">
+
+    <form [formGroup]="pokemonForm">
+      <div class="col-12">
+        <div class="row">
+          <div class="search-input">
+            <input type="text" class="form-control" placeholder="Pikachu" formControlName="name">
+          </div>
+
+          <button type="button" class="btn btn-primary base-button" type="submit" (click)="searchPokemon()">Search
+            card</button>
+
+          <div class=" col d-flex flex-row">
+            <div class=" px-3 p-2 " *ngIf="noResultFound$ | async">
+              No result found.
+            </div>
+
+            <div class=" p-2 px-3" *ngIf="(cards$ | async).length > 0">
+              {{(cards$ | async).length}} Result(s)
+            </div>
+
+            <div class=" px-3 p-2 " *ngIf="error$ | async">
+              Error during loading : {{(error$ | async).message}}
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="row m-0">
+    <div class="col-md-3 p-2" *ngFor="let card of cards$ | async">
+      <div class="card p-2">
+
+        <div class="row">
+          <div class="col-6">
+            <img src="{{card.images.small}}" class="w-100">
+          </div>
+          <div class="col-6">
+            <div>
+              {{card.id}}
+            </div>
+            <div>
+              {{card.name}}
+            </div>
+            <div *ngIf="card.cardmarket && card.cardmarket.prices && card.cardmarket.prices.trendPrice">
+              Price : {{card.cardmarket.prices.trendPrice}}$
+            </div>
+
+            <div class="pt-3">
+              <button type="button" class="btn btn-outline-primary" (click)="addToBasket(card)">Add to basket</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

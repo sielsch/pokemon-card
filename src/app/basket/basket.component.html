@@ -1,0 +1,50 @@
+<div class="main-container">
+  <div class="p-3 ">
+
+    <div *ngIf="isEmpty">
+      The basket is empty
+    </div>
+
+    <div class="row m-0">
+      <div class="col-md-3 p-2" *ngFor="let shoppingItem of basket$ | async">
+
+
+        <div class="card p-2">
+
+
+          <div class="row">
+            <div class="col-6">
+              <img src="{{shoppingItem.card.images.small}}" class="w-100">
+            </div>
+            <div class="col-6">
+              <div>
+                {{shoppingItem.card.id}}
+              </div>
+              <div>
+                {{shoppingItem.card.name}}
+              </div>
+              <div>
+                Price : {{shoppingItem.card.cardmarket.prices.trendPrice}}$
+              </div>
+              <div>
+                <span>
+                  Quantity : {{shoppingItem.count}}
+                </span>
+                <span class="p-1">
+                  <button class="btn btn-outline-primary counter-btn p-1" (click)="removeOne(shoppingItem)">-</button>
+                </span>
+                <span class="p-1">
+                  <button class="btn  btn-outline-primary counter-btn p-1" (click)="addOne(shoppingItem)">+</button>
+                </span>
+              </div>
+              <div>
+                Total : {{shoppingItem.count * shoppingItem.card.cardmarket.prices.trendPrice | number : '1.2-2' }}
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
